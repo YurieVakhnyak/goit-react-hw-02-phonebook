@@ -1,76 +1,21 @@
+import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix';
 import React, { Component } from 'react';
+import { Filter } from './Filter/Filter';
+import { ContactList } from './ContactList/ContactList';
+import { ContactForm } from './ContactForm/ContactForm';
 
 const TitlePhonebook = ({ title = 'Phonebook' }) => {
-  return <p className="title">{title}</p>;
+  return <h1 className="title">{title}</h1>;
 };
-
-// handleChange = evt => {
-//   const { name, value } = evt.target;
-//   this.setState({ [name]: value });
-// };
-
-// handleSubmit = evt => {
-//   evt.preventDefault();
-//   const { contacts, name } = this.state;
-//   console.log(`Name: ${name}, Contacts: ${contacts}`);
-//   this.props.onSubmit({ ...this.state });
-//   this.reset();
-// };
-
-// const InputContacts = () => {
-//   return (
-//     <form onSubmit={this.handleSubmit}>
-//       <input
-//         type="text"
-//         name="name"
-//         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-//         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-//         required
-//       />
-//       <button type="submit">Add contact</button>
-//     </form>
-//   );
-// };
-
-const ContactList = ({ contacts }) => {
-  return (
-    <div>
-      <p className="title-list">Here I am!</p>
-      {/* <p className="subtitle-list">{contacts[0].name}</p> */}
-      <ul>
-        {contacts.map(({ name, number }) => (
-          <li className="friend-item">
-            <p className="contact-name">{name}</p>
-            <p className="contact-number">{number}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// export class App extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       contacts: [],
-//       name: '',
-//     };
-//   }
-//   render() {
-//     const { contacts, name } = this.state;
-//     return (
-//       <div>
-//         <TitlePhonebook />
-//         <InputContacts onSubmit={this.handleSubmit} />
-//         <ContactList contacts={this.state.contacts} />
-//       </div>
-//     );
-//   }
-// }
 
 const INITIAL_STATE = {
-  contacts: [],
+  contacts: [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ],
   filter: '',
   name: '',
   number: '',
@@ -79,27 +24,45 @@ const INITIAL_STATE = {
 export class App extends Component {
   state = { ...INITIAL_STATE };
 
-  // Для всіх інпутів створюємо один обробник
-  // Розрізняти інпути будемо за атрибутом name
+  handleClick = event => {
+    const index = this.state.contacts.findIndex(
+      contact => contact.id === event.target.name
+    );
+    this.state.contacts.splice(index, 1);
+    this.setState({
+      contacts: this.state.contacts,
+    });
+  };
+
   handleChange = evt => {
     const { name, value } = evt.target;
     this.setState({ [name]: value });
   };
+  handleInput = evt => {
+    const { name, value } = evt.target;
+    this.setState({ [name]: value });
 
+    return evt.target.value;
+  };
   handleSubmit = evt => {
     evt.preventDefault();
+
     const { contacts, filter, name, number } = this.state;
+    const idNumber = contacts.length;
 
-    contacts.push({ name: name, number: number });
-
-    console.log(
-      `contacts: ${contacts[0].name}, filter: ${filter}, name: ${name}, number: ${number}`
-    );
+    const filteredContacts = contacts.filter(contact => contact.name === name);
+    {
+      filteredContacts.length > 0
+        ? Notify.info(`${name} is allready in contacts`)
+        : contacts.push({ id: nanoid(), name: name, number: number }) &&
+          console.log(contacts[idNumber]);
+    }
     this.setState({
       name: name,
       number: number,
     });
     // this.props.onSubmit({ ...this.state });
+    this.setState({ ...INITIAL_STATE });
     this.reset();
   };
 
@@ -113,47 +76,21 @@ export class App extends Component {
     return (
       <div className="phonebook">
         <TitlePhonebook />
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
-            <input
-              type="name"
-              placeholder="Enter your name"
-              name="name"
-              value={name}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Number
-            <input
-              type="tel"
-              name="number"
-              placeholder="Enter your phone number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              value={number}
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <label>
-            Search
-            <input
-              type="name"
-              placeholder="..."
-              name="filter"
-              value={filter}
-              onChange={this.handleChange}
-            />
-          </label>
+        <ContactForm
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          name={name}
+          number={number}
+        />
+        <h2 className="contact-title">Contacts</h2>
 
-          <button type="submit">Add contact</button>
-        </form>
-        {this.state.contacts.length === 0 ? (
-          ''
-        ) : (
-          <ContactList contacts={contacts} />
+        <Filter handleInput={this.handleInput} filter={filter} />
+        {contacts.length > 0 && (
+          <ContactList
+            contacts={contacts}
+            filter={filter}
+            handleClick={this.handleClick}
+          />
         )}
       </div>
     );
