@@ -16,6 +16,9 @@ export const ContactFormStyled = styled.form`
 export const ContactInput = styled.input`
   height: 20px;
   padding-left: 10px;
+  &:focus {
+    outline-color: cadetblue;
+  }
 `;
 
 export const ContactLabel = styled.label`

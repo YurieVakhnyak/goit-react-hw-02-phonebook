@@ -5,7 +5,6 @@ import {
   ContactItemStyled,
   ContactName,
 } from 'components/ContactItem/ContactItem.styled';
-import { ContactButton } from 'components/ContactForm/ContactForm.styled';
 
 export const ContactItem = ({ id, name, number, handleClick }) => {
   return (

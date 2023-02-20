@@ -6,10 +6,6 @@ import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Phonebook, ContactTitle, TitlePhonebook } from './App.styled';
 
-// const TitlePhonebook = ({ title = 'Phonebook' }) => {
-//   return <h1 className="title">{title}</h1>;
-// };
-
 const INITIAL_STATE = {
   contacts: [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -47,17 +43,17 @@ export class App extends Component {
   };
   handleSubmit = evt => {
     evt.preventDefault();
-
+    // eslint-disable-next-line
     const { contacts, filter, name, number } = this.state;
     const idNumber = contacts.length;
 
     const filteredContacts = contacts.filter(contact => contact.name === name);
-    {
-      filteredContacts.length > 0
-        ? Notify.info(`${name} is allready in contacts`)
-        : contacts.push({ id: nanoid(), name: name, number: number }) &&
-          console.log(contacts[idNumber]);
-    }
+
+    filteredContacts.length > 0
+      ? Notify.info(`${name} is allready in contacts`)
+      : contacts.push({ id: nanoid(), name: name, number: number }) &&
+        console.log(contacts[idNumber]);
+
     this.setState({
       name: name,
       number: number,
