@@ -1,27 +1,9 @@
-import { MdPhone } from 'react-icons/md';
-
-const ContactItem = ({ id, name, number, handleClick }) => {
-  return (
-    <li className="contact-item" key={id}>
-      <MdPhone className="contact-icon" />
-      <p className="contact-name">
-        {name} : {number}
-      </p>
-      <button
-        className="contact-btn"
-        type="button"
-        name={id}
-        onClick={handleClick}
-      >
-        Delete
-      </button>
-    </li>
-  );
-};
+import { ContactItem } from 'components/ContactItem/ContactItem';
+import { ContacListStyled } from './ContactList.styled';
 
 export const ContactList = ({ contacts, filter, handleClick }) => {
   return (
-    <ul className="contact-list">
+    <ContacListStyled>
       {contacts
         .filter(contact =>
           contact.name.toLowerCase().includes(filter.toLowerCase())
@@ -35,6 +17,6 @@ export const ContactList = ({ contacts, filter, handleClick }) => {
             handleClick={handleClick}
           />
         ))}
-    </ul>
+    </ContacListStyled>
   );
 };

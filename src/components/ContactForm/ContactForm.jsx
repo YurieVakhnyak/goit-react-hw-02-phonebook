@@ -1,22 +1,30 @@
+import {
+  ContactFormStyled,
+  ContactInput,
+  ContactLabel,
+  ContactButton,
+} from './ContactForm.styled';
+
 export const ContactForm = ({ handleSubmit, handleChange, name, number }) => {
   return (
-    <form className="contact-form" onSubmit={handleSubmit}>
-      <label className="contact-label">
+    <ContactFormStyled onSubmit={handleSubmit}>
+      <ContactLabel>
         Name
-        <input
+        <ContactInput
           type="text"
           placeholder="Enter contact name"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          title="Name may contain only letters (less then 25), apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          maxlength="25"
           required
           value={name}
           onChange={handleChange}
         />
-      </label>
-      <label className="contact-label">
+      </ContactLabel>
+      <ContactLabel>
         Number
-        <input
+        <ContactInput
           type="tel"
           name="number"
           placeholder="Enter contact phone number"
@@ -26,11 +34,9 @@ export const ContactForm = ({ handleSubmit, handleChange, name, number }) => {
           onChange={handleChange}
           required
         />
-      </label>
+      </ContactLabel>
 
-      <button className="contact-btn contact-add" type="submit">
-        Add contact
-      </button>
-    </form>
+      <ContactButton type="submit">Add contact</ContactButton>
+    </ContactFormStyled>
   );
 };

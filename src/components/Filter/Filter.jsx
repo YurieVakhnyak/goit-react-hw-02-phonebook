@@ -1,14 +1,17 @@
+import { ContactInput } from 'components/ContactForm/ContactForm.styled';
+import { FilterLabel } from 'components/Filter/Filter.styled';
+
 export const Filter = ({ handleInput, filter }) => {
   return (
-    <label className="contact-form contact-label">
+    <FilterLabel>
       Find contact by name:
-      <input
+      <ContactInput
         type="name"
         placeholder="Enter searching name..."
         name="filter"
         value={filter}
         onInput={handleInput}
       />
-    </label>
+    </FilterLabel>
   );
 };

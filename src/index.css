@@ -20,17 +20,11 @@ code {
     monospace;
 }
 
-.phonebook {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.title {
+/* .title {
   margin-left: 120px;
-}
+} */
 
-.contact-form {
+/* .contact-form {
   margin-left: 20px;
   text-align: center;
   padding: 20px;
@@ -40,36 +34,36 @@ code {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
+} */
 
-.contact-form input {
+/* .contact-form input {
   height: 20px;
   padding-left: 10px;
-}
+} */
 
-.contact-label {
+/* .contact-label {
   display: flex;
   flex-direction: column;
-}
-
+} */
+/* 
 .contact-title {
   margin-left: 150px;
-}
+} */
 
-.contact-list {
+/* .contact-list {
   padding: 20px;
   margin-left: 20px;
   border: 2px solid cadetblue;
   border-radius: 5px;
   width: 350px;
-}
+} */
 
-.contact-item {
+/* .contact-item {
   display: flex;
   align-items: center;
-}
+} */
 
-.contact-btn {
+/* .contact-btn {
   padding-left: 5px;
   padding-right: 5px;
   margin: 3px;
@@ -77,27 +71,30 @@ code {
   border-radius: 3px;
   border-width: 1px;
   border-color: darkgray;
-}
+} */
 
-.contact-btn.contact-add {
+/* .contact-btn.contact-add {
   height: 25px;
-}
+} */
 
 .contact-icon {
   color: cadetblue;
   margin-right: 10px;
 }
 
-.contact-name {
+/* .contact-name {
   margin-right: auto;
-}
+} */
 
-ul li:hover {
+/* ul li:hover {
   text-decoration: underline;
   text-decoration-color: cadetblue;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: cadetblue;
+  border-width: 2px;
+  border-color: cadetblue;
+  border-radius: 3px;
   cursor: pointer;
-}
+} */

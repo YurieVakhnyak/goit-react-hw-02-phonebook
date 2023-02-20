@@ -4,10 +4,11 @@ import React, { Component } from 'react';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
+import { Phonebook, ContactTitle, TitlePhonebook } from './App.styled';
 
-const TitlePhonebook = ({ title = 'Phonebook' }) => {
-  return <h1 className="title">{title}</h1>;
-};
+// const TitlePhonebook = ({ title = 'Phonebook' }) => {
+//   return <h1 className="title">{title}</h1>;
+// };
 
 const INITIAL_STATE = {
   contacts: [
@@ -74,15 +75,15 @@ export class App extends Component {
     const { contacts, filter, name, number } = this.state;
 
     return (
-      <div className="phonebook">
-        <TitlePhonebook />
+      <Phonebook>
+        <TitlePhonebook>Phonebook</TitlePhonebook>
         <ContactForm
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           name={name}
           number={number}
         />
-        <h2 className="contact-title">Contacts</h2>
+        <ContactTitle>Contacts</ContactTitle>
 
         <Filter handleInput={this.handleInput} filter={filter} />
         {contacts.length > 0 && (
@@ -92,7 +93,7 @@ export class App extends Component {
             handleClick={this.handleClick}
           />
         )}
-      </div>
+      </Phonebook>
     );
   }
 }
