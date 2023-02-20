@@ -11,6 +11,11 @@ export const ContactItemStyled = styled.li`
     text-decoration: underline;
     text-decoration-color: cadetblue;
   }
+
+  & svg {
+    color: cadetblue;
+    margin-right: 10px;
+  }
 `;
 
 export const ContactIcon = styled.svg`
@@ -25,6 +30,5 @@ export const ContactName = styled.p`
 export const DeleteButton = styled(ContactButton)`
   ${props => css`
     height: 20px;
-    }
   `}
 `;

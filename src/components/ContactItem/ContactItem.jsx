@@ -10,7 +10,7 @@ import { ContactButton } from 'components/ContactForm/ContactForm.styled';
 export const ContactItem = ({ id, name, number, handleClick }) => {
   return (
     <ContactItemStyled key={id}>
-      <MdPhone className="contact-icon" />
+      <MdPhone />
       <ContactName>
         {name} : {number}
       </ContactName>
