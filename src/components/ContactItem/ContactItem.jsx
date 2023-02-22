@@ -6,14 +6,14 @@ import {
   ContactName,
 } from 'components/ContactItem/ContactItem.styled';
 
-export const ContactItem = ({ id, name, number, handleClick }) => {
+export const ContactItem = ({ id, name, number, onDeleteContact }) => {
   return (
     <ContactItemStyled key={id}>
       <MdPhone />
       <ContactName>
         {name} : {number}
       </ContactName>
-      <DeleteButton type="button" name={id} onClick={handleClick}>
+      <DeleteButton type="button" name={id} onClick={() => onDeleteContact()}>
         Delete
       </DeleteButton>
     </ContactItemStyled>

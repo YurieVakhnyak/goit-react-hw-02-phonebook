@@ -5,7 +5,13 @@ import {
   ContactButton,
 } from './ContactForm.styled';
 
-export const ContactForm = ({ handleSubmit, handleChange, name, number }) => {
+export const ContactForm = ({
+  handleSubmit,
+  handleChange,
+  id,
+  name,
+  number,
+}) => {
   return (
     <ContactFormStyled onSubmit={handleSubmit}>
       <ContactLabel>

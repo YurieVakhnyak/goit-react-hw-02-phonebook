@@ -21,15 +21,36 @@ const INITIAL_STATE = {
 export class App extends Component {
   state = { ...INITIAL_STATE };
 
-  handleClick = event => {
-    const index = this.state.contacts.findIndex(
-      contact => contact.id === event.target.name
-    );
-    this.state.contacts.splice(index, 1);
-    this.setState({
-      contacts: this.state.contacts,
-    });
+  componentDidMount() {
+    // get data from LocalStorage, if it exists
+    const contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (contacts) {
+      this.setState({ contacts });
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    // save data to LocalStorage, if it changes
+    if (prevState !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  deleteContact = contactId => {
+    // delete contact by click button 'Delete'
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
+
+  //   const index = this.state.contacts.findIndex(
+  //     contact => contact.id === event.target.name
+  //   );
+  //   this.state.contacts.splice(index, 1);
+  //   this.setState({
+  //     contacts: this.state.contacts,
+  //   });
+  // };
 
   handleChange = evt => {
     const { name, value } = evt.target;
@@ -43,28 +64,23 @@ export class App extends Component {
   };
   handleSubmit = evt => {
     evt.preventDefault();
-    // eslint-disable-next-line
-    const { contacts, filter, name, number } = this.state;
-    const idNumber = contacts.length;
 
+    const { contacts, name, number } = this.state;
     const filteredContacts = contacts.filter(contact => contact.name === name);
+
+    const newContact = {
+      id: nanoid(),
+      name: name,
+      number: number,
+    };
 
     filteredContacts.length > 0
       ? Notify.info(`${name} is allready in contacts`)
-      : contacts.push({ id: nanoid(), name: name, number: number }) &&
-        console.log(contacts[idNumber]);
-
-    this.setState({
-      name: name,
-      number: number,
-    });
-    // this.props.onSubmit({ ...this.state });
-    this.setState({ ...INITIAL_STATE });
-    this.reset();
-  };
-
-  reset = () => {
-    this.setState({ ...INITIAL_STATE });
+      : this.setState(prevState => ({
+          contacts: [...prevState.contacts, newContact],
+          name: '',
+          number: '',
+        }));
   };
 
   render() {
@@ -86,7 +102,7 @@ export class App extends Component {
           <ContactList
             contacts={contacts}
             filter={filter}
-            handleClick={this.handleClick}
+            onDeleteContact={this.deleteContact}
           />
         )}
       </Phonebook>

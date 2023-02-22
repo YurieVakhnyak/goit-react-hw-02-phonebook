@@ -1,7 +1,7 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { ContacListStyled } from './ContactList.styled';
 
-export const ContactList = ({ contacts, filter, handleClick }) => {
+export const ContactList = ({ contacts, filter, onDeleteContact }) => {
   return (
     <ContacListStyled>
       {contacts
@@ -14,7 +14,7 @@ export const ContactList = ({ contacts, filter, handleClick }) => {
             id={id}
             name={name}
             number={number}
-            handleClick={handleClick}
+            onDeleteContact={() => onDeleteContact(id)}
           />
         ))}
     </ContacListStyled>
