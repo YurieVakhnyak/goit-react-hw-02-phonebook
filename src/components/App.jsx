@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid';
-import { Notify } from 'notiflix';
 import React, { Component } from 'react';
+import { Notify } from 'notiflix';
+import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -14,8 +14,6 @@ const INITIAL_STATE = {
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
   ],
   filter: '',
-  name: '',
-  number: '',
 };
 
 export class App extends Component {
@@ -43,58 +41,35 @@ export class App extends Component {
     }));
   };
 
-  //   const index = this.state.contacts.findIndex(
-  //     contact => contact.id === event.target.name
-  //   );
-  //   this.state.contacts.splice(index, 1);
-  //   this.setState({
-  //     contacts: this.state.contacts,
-  //   });
-  // };
-
-  handleChange = evt => {
-    const { name, value } = evt.target;
-    this.setState({ [name]: value });
-  };
   handleInput = evt => {
     const { name, value } = evt.target;
     this.setState({ [name]: value });
 
     return evt.target.value;
   };
-  handleSubmit = evt => {
-    evt.preventDefault();
-
-    const { contacts, name, number } = this.state;
+  addNewContact = data => {
+    const { contacts } = this.state;
+    const { name, number } = data;
     const filteredContacts = contacts.filter(contact => contact.name === name);
-
     const newContact = {
       id: nanoid(),
       name: name,
       number: number,
     };
-
     filteredContacts.length > 0
       ? Notify.info(`${name} is allready in contacts`)
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, newContact],
-          name: '',
-          number: '',
         }));
   };
 
   render() {
-    const { contacts, filter, name, number } = this.state;
+    const { contacts, filter } = this.state;
 
     return (
       <Phonebook>
         <TitlePhonebook>Phonebook</TitlePhonebook>
-        <ContactForm
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          name={name}
-          number={number}
-        />
+        <ContactForm dataSubmit={this.addNewContact} contacts={contacts} />
         <ContactTitle>Contacts</ContactTitle>
 
         <Filter handleInput={this.handleInput} filter={filter} />
